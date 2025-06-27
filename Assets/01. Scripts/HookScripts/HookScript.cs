@@ -11,7 +11,7 @@ public class HookScript : MonoBehaviour
         hookMovement = GetComponentInParent<HookMovement>();
     }
 
-    private void OnTriggerExit2D(Collider2D target)
+    private void OnTriggerEnter2D(Collider2D target)
     {
         if (target.tag == Tags.SMALL_GOLD || target.tag == Tags.MIDDEL_GOLD || target.tag == Tags.LARGE_GOLD ||
             target.tag == Tags.LARGE_STONE || target.tag == Tags.MIDDEL_STONE)
@@ -26,12 +26,25 @@ public class HookScript : MonoBehaviour
 
         if (target.tag == Tags.SMALL_GOLD || target.tag == Tags.MIDDEL_GOLD || target.tag == Tags.LARGE_GOLD)
         {
-            //Sound
+            SoundManager.instance.HoorGrab_Gold();
         }
         else if (target.tag == Tags.LARGE_STONE || target.tag == Tags.MIDDEL_STONE)
         {
-            //Sound
+            SoundManager.instance.HoorGrab_Stone();
         }
-        //Sound
+        SoundManager.instance.PullSound(true);
+
+        if(target.tag == Tags.DELIVER_ITEM)
+        {
+            if(itemAttached)
+            {
+                itemAttached = false;
+                Transform objChild = itemHolder.GetChild(0);
+                objChild.parent = null;
+                objChild.gameObject.SetActive(false);
+
+                SoundManager.instance.PullSound(false);
+            }
+        }
     }
 }

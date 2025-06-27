@@ -72,6 +72,8 @@ public class HookMovement : MonoBehaviour
             {
                 canRotate = false;
                 moveDown = true;
+
+                SoundManager.instance.RopeStretch(true);
             }
         }
     }
@@ -105,7 +107,9 @@ public class HookMovement : MonoBehaviour
                 canRotate = true;
                 ropeRenderer.RenderLine(temp, false);
                 move_Speed = initial_Move_Speed;
-                //moveDown = true;
+                SoundManager.instance.RopeStretch(false);
+
+                SoundManager.instance.RopeStretch(false);
             }
         }
         ropeRenderer.RenderLine(transform.position, true);
